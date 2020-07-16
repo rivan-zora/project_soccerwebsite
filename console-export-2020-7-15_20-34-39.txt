@@ -1,0 +1,6 @@
+Live reload enabled. index.html:72:13
+GEThttp://127.0.0.1:5500/favicon.ico
+[HTTP/1.1 404 Not Found 3ms]
+
+Object { get: "players/topscorers", parameters: {…}, errors: [], results: 20, paging: {…}, response: (20) […] }
+leaguesapi2.js:10:11
