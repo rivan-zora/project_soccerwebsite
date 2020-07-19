@@ -6,16 +6,73 @@
     <title>Top scorers</title>
 </head>
 <body style = "background-color: #99a9b3">
-    <table id = "rank" border="solid">
-        <tr>
-            <th>Rank</th>
+    <table>
+        <!-- <tr>
             <th>Name</th>
             <th>Goals</th>
             <th>Assists</th>
             <th>Team</th>
-        </tr>
+        </tr> -->
     </table>
 <script src ="js/jquery-3.5.1.min.js"></script>
-<script src="js/resulttop.js"></script>
+<script>
+    
+
+var rank= 0;
+var stats; 
+const results = {name: [], goals: [], assists: [] , team: []};
+
+
+//We need to initiate a request to read the json file
+    $.getJSON('data/topscores.json')
+     .done(function(data){ // Once done do the below
+
+
+        $.each(data, function(keyIndex) {
+        results.name[keyIndex] = (data[keyIndex].player.name);
+        stats = data[keyIndex].statistics;
+        results.goals[keyIndex] = (stats[0].goals.total);
+        results.assists[keyIndex] = (stats[0].goals.assists);
+        results.team[keyIndex] = (stats[0].team.name);
+        });
+
+    });
+
+    
+// Create a titles array to store the headings
+    const titles = ['name' , 'goals', 'assists' , 'team']; 
+
+    const createElement = document.createElement.bind(document);
+    const querySelector = document.querySelector.bind(document);
+
+    const table = querySelector('table');
+    const titleTr = createElement('tr');
+    table.append(titleTr);
+
+
+    titles.forEach(title => {
+        const th = createElement('th');
+        th.textContent = title.replace(/\w/, l => l.toUpperCase()); //Pass the first character of heading and upperacse it
+        titleTr.append(th);
+        });
+
+        console.log(Object.values(results))
+         
+        Object.keys(Object.values(results)[0]).forEach(i => {
+            const tr = createElement('tr');
+            titles.forEach(title => {
+              const td = createElement('td');
+              td.textContent = results[title][i];
+              tr.append(td);
+              
+            });
+    
+            table.append(tr);
+          });
+           
+
+
+</script>
+<!-- <script src="js/resulttop.js"></script> -->
 </body>
 </html>
